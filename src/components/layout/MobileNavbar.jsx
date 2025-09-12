@@ -16,9 +16,26 @@ import {
 const MobileNavbar = () => {
   const { userProfile } = useAuth()
   const location = useLocation()
+  const [isMobile, setIsMobile] = React.useState(false)
+
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const isActive = (path) => {
     return location.pathname === path
+  }
+
+  // Don't render if not mobile or no user
+  if (!isMobile || !userProfile) {
+    return null
   }
 
   const getNavItems = () => {
@@ -88,10 +105,7 @@ const MobileNavbar = () => {
   const navItems = getNavItems()
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-dark-800/95 backdrop-blur-lg border-t border-dark-700 safe-area-pb">
-      {/* Home indicator line */}
-      <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-white/30 rounded-full"></div>
-      
+    <div className="fixed bottom-0 left-0 right-0 z-50 safe-area-pb">
       <div className="flex items-center justify-center gap-1 px-4 py-3 pb-6">
         {navItems.map((item, index) => {
           const Icon = item.icon

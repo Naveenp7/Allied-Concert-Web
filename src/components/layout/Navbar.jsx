@@ -275,8 +275,6 @@ const Navbar = () => {
         )}
       </div>
       
-      {/* Mobile Bottom Navigation */}
-      {isMobile && currentUser && <MobileNavbar />}
     </nav>
   )
 }

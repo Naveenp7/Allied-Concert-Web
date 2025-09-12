@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './contexts/AuthContext'
 import Navbar from './components/layout/Navbar'
+import MobileNavbar from './components/layout/MobileNavbar'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -88,6 +89,8 @@ function App() {
               />
             </Routes>
           </main>
+          {/* Mobile Navigation - Always render for mobile */}
+          <MobileNavbar />
           <Toaster 
             position="top-right"
             toastOptions={{
