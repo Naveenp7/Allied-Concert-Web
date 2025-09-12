@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { useLocation } from 'react-router-dom'
 import { collection, query, where, orderBy, onSnapshot, addDoc, updateDoc, doc, getDocs } from 'firebase/firestore'
 import { db } from '../config/firebase'
-import { MessageCircle, Send, User, Search } from 'lucide-react'
+import { MessageCircle, Send, User, Search, CheckCheck } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 const Messages = () => {
@@ -82,7 +82,7 @@ const Messages = () => {
         senderId: userProfile.uid,
         senderName: userProfile.name,
         createdAt: new Date().toISOString(),
-        read: false
+        read: true // Set read status to true when sending a message
       }
 
       // Add message to conversation
@@ -95,7 +95,8 @@ const Messages = () => {
       await updateDoc(doc(db, 'conversations', selectedConversation.id), {
         lastMessage: newMessage,
         lastMessageAt: new Date().toISOString(),
-        lastMessageBy: userProfile.uid
+        lastMessageBy: userProfile.uid,
+        lastMessageRead: true // Mark the last message as read by the sender
       })
 
       setNewMessage('')
@@ -300,17 +301,16 @@ const Messages = () => {
                           </span>
                         </div>
                       )}
-                      <div className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                      <div className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'} mb-2`}>
+                        <div className={`max-w-xs lg:max-w-md px-3 py-2 rounded-2xl ${
                           isOwnMessage 
                             ? 'bg-primary-600 text-white' 
                             : 'bg-dark-700 text-white'
                         }`}>
                           <p className="text-sm">{message.text}</p>
-                          <p className={`text-xs mt-1 ${
-                            isOwnMessage ? 'text-primary-200' : 'text-dark-400'
-                          }`}>
+                          <p className={`text-xs mt-1 flex items-center gap-1 ${isOwnMessage ? 'text-primary-200 justify-end' : 'text-dark-400'}`}>
                             {formatTime(message.createdAt)}
+                            {isOwnMessage && message.read && <CheckCheck size={14} />}
                           </p>
                         </div>
                       </div>
