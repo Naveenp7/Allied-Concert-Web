@@ -39,7 +39,10 @@ export default {
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.3s ease-out',
-        'scale-in': 'scaleIn 0.2s ease-out',
+        'bounce-gentle': 'bounceGentle 2s infinite',
+      },
+      spacing: {
+        'safe-area-inset-bottom': 'env(safe-area-inset-bottom)',
       },
       keyframes: {
         fadeIn: {

@@ -62,14 +62,14 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-dark-900 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-dark-900 py-4 md:py-8">
+      <div className="max-w-7xl mx-auto mobile-container">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="mobile-title font-bold text-white mb-2">
             Welcome back, {userProfile?.name}!
           </h1>
-          <p className="text-dark-300">
+          <p className="mobile-text text-dark-300">
             {userProfile?.role === 'event_manager' 
               ? 'Manage your events and find talented musicians'
               : 'Discover new opportunities and manage your applications'
@@ -78,8 +78,8 @@ const Dashboard = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="card">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
+          <div className="card mobile-card">
             <div className="flex items-center">
               <div className="p-3 bg-primary-500/10 rounded-lg">
                 <Calendar className="h-8 w-8 text-primary-500" />
@@ -133,15 +133,15 @@ const Dashboard = () => {
           <div className="flex flex-wrap gap-4">
             {userProfile?.role === 'event_manager' ? (
               <>
-                <Link to="/create-event" className="btn-primary flex items-center space-x-2">
+                <Link to="/create-event" className="btn-primary mobile-button flex items-center justify-center space-x-2">
                   <Plus className="h-4 w-4" />
                   <span>Create New Event</span>
                 </Link>
-                <Link to="/artist-discovery" className="btn-secondary flex items-center space-x-2">
+                <Link to="/artist-discovery" className="btn-secondary mobile-button flex items-center justify-center space-x-2">
                   <Users className="h-4 w-4" />
                   <span>Discover Artists</span>
                 </Link>
-                <Link to="/events" className="btn-secondary flex items-center space-x-2">
+                <Link to="/events" className="btn-secondary mobile-button flex items-center justify-center space-x-2">
                   <Calendar className="h-4 w-4" />
                   <span>Browse All Events</span>
                 </Link>

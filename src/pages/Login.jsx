@@ -35,8 +35,8 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-dark-900 py-8 md:py-12 mobile-container">
+      <div className="max-w-md w-full space-y-6 md:space-y-8">
         <div className="text-center">
           <div className="flex justify-center">
             <Music className="h-12 w-12 text-primary-500" />
@@ -69,7 +69,7 @@ const Login = () => {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="input-field pl-10 w-full"
+                  className="input mobile-input pl-10 w-full"
                   placeholder="Enter your email"
                 />
               </div>
@@ -80,18 +80,16 @@ const Login = () => {
                 Password
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-dark-400" />
-                </div>
                 <input
                   id="password"
                   name="password"
                   type={showPassword ? 'text' : 'password'}
+                  autoComplete="current-password"
                   required
+                  className="input mobile-input pr-10"
+                  placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="input-field pl-10 pr-10 w-full"
-                  placeholder="Enter your password"
                 />
                 <button
                   type="button"
@@ -132,7 +130,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary mobile-button w-full flex justify-center"
             >
               {loading ? 'Signing in...' : 'Sign in'}
             </button>

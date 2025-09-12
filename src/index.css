@@ -2,6 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile-first responsive utilities */
+@layer utilities {
+  .safe-area-pb {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+  
+  .mobile-container {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  .mobile-card {
+    @apply p-4 sm:p-6;
+  }
+  
+  .mobile-text {
+    @apply text-sm sm:text-base;
+  }
+  
+  .mobile-title {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+  
+  .mobile-button {
+    @apply px-4 py-3 text-sm font-medium min-h-[44px] touch-manipulation;
+  }
+  
+  .mobile-input {
+    @apply min-h-[44px] text-base;
+  }
+}
+
 @layer base {
   * {
     @apply border-dark-600;

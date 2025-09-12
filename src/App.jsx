@@ -23,7 +23,7 @@ function App() {
       <Router>
         <div className="min-h-screen bg-dark-900">
           <Navbar />
-          <main className="pt-16">
+          <main className="min-h-screen pb-20 md:pb-0">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />

@@ -1,12 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
-import { Music, User, LogOut, Menu, X, Calendar, MessageCircle, Plus } from 'lucide-react'
+import { Menu, X, Plus, MessageCircle, User, LogOut, Music } from 'lucide-react'
+import MobileNavbar from './MobileNavbar'
 
 const Navbar = () => {
   const { currentUser, userProfile, logout } = useAuth()
   const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const handleLogout = async () => {
     try {
@@ -217,6 +230,9 @@ const Navbar = () => {
           </div>
         )}
       </div>
+      
+      {/* Mobile Bottom Navigation */}
+      {isMobile && currentUser && <MobileNavbar />}
     </nav>
   )
 }

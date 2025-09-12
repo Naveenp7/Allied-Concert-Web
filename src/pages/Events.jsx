@@ -155,18 +155,18 @@ const Events = () => {
   }
 
   return (
-    <div className="min-h-screen bg-dark-900 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-dark-900 py-4 md:py-8">
+      <div className="max-w-7xl mx-auto mobile-container">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Browse Events</h1>
+          <h1 className="mobile-title font-bold text-white mb-6 md:mb-8">Find Your Next Gig</h1>
           <p className="text-dark-300">
             Discover exciting performance opportunities and connect with event organizers
           </p>
         </div>
 
         {/* Search and Filters */}
-        <div className="mb-8 space-y-4">
+        <div className="mb-6 md:mb-8 space-y-4">
           {/* Search Bar */}
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -176,7 +176,7 @@ const Events = () => {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="input-field pl-10 w-full"
+              className="input mobile-input pl-10 w-full"
               placeholder="Search events by title, description, or location..."
             />
           </div>
@@ -194,7 +194,7 @@ const Events = () => {
             {(searchTerm || Object.values(filters).some(f => f)) && (
               <button
                 onClick={clearFilters}
-                className="text-primary-400 hover:text-primary-300 text-sm"
+                className="btn-primary mobile-button"
               >
                 Clear all filters
               </button>
@@ -287,7 +287,7 @@ const Events = () => {
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {filteredEvents.map(event => (
               <Link
                 key={event.id}
