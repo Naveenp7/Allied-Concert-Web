@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
-import { Menu, X, Plus, MessageCircle, User, LogOut, Music } from 'lucide-react'
+import { Menu, X, Plus, MessageCircle, User, LogOut, Music, Search, Users } from 'lucide-react'
 import MobileNavbar from './MobileNavbar'
 
 const Navbar = () => {
   const { currentUser, userProfile, logout } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
 
@@ -35,95 +36,138 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-dark-800/95 backdrop-blur-sm border-b border-dark-700">
+    <nav className={`bg-dark-800 border-b border-dark-700 sticky top-0 z-40 ${isMobile ? 'hidden' : 'block'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <Music className="h-8 w-8 text-primary-500" />
-            <span className="text-xl font-bold text-white">Allied</span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link 
-              to="/events" 
-              className="text-dark-300 hover:text-white transition-colors duration-200"
-            >
-              Browse Events
+        <div className="flex justify-between h-16">
+          <div className="flex items-center">
+            <Link to="/" className="flex items-center space-x-2">
+              <Music className="h-8 w-8 text-primary-500" />
+              <span className="text-xl font-bold text-white">Allied</span>
             </Link>
-            
+          </div>
+
+          {/* Desktop Navigation - Pill Style */}
+          <div className="hidden md:flex items-center">
             {currentUser ? (
-              <>
+              <div className="flex items-center gap-1 bg-dark-700/50 backdrop-blur-sm rounded-full p-1">
                 <Link 
                   to="/dashboard" 
-                  className="text-dark-300 hover:text-white transition-colors duration-200"
+                  className={`relative flex items-center justify-center transition-all duration-300 ease-out touch-manipulation select-none cursor-pointer min-h-[40px] ${
+                    location.pathname === '/dashboard'
+                      ? 'bg-black text-white rounded-full px-4 py-2 min-w-[100px]'
+                      : 'bg-white/10 text-gray-300 rounded-full w-10 h-10 hover:bg-white/20 hover:text-white'
+                  }`}
                 >
-                  Dashboard
+                  <div className="flex items-center gap-2">
+                    <Music className="h-4 w-4" />
+                    {location.pathname === '/dashboard' && (
+                      <span className="text-sm font-medium whitespace-nowrap">Home</span>
+                    )}
+                  </div>
+                </Link>
+                
+                <Link 
+                  to="/events" 
+                  className={`relative flex items-center justify-center transition-all duration-300 ease-out touch-manipulation select-none cursor-pointer min-h-[40px] ${
+                    location.pathname === '/events'
+                      ? 'bg-black text-white rounded-full px-4 py-2 min-w-[100px]'
+                      : 'bg-white/10 text-gray-300 rounded-full w-10 h-10 hover:bg-white/20 hover:text-white'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <Search className="h-4 w-4" />
+                    {location.pathname === '/events' && (
+                      <span className="text-sm font-medium whitespace-nowrap">Events</span>
+                    )}
+                  </div>
                 </Link>
                 
                 {userProfile?.role === 'event_manager' && (
                   <Link 
                     to="/artist-discovery" 
-                    className="text-dark-300 hover:text-white transition-colors duration-200"
+                    className={`relative flex items-center justify-center transition-all duration-300 ease-out touch-manipulation select-none cursor-pointer min-h-[40px] ${
+                      location.pathname === '/artist-discovery'
+                        ? 'bg-black text-white rounded-full px-4 py-2 min-w-[100px]'
+                        : 'bg-white/10 text-gray-300 rounded-full w-10 h-10 hover:bg-white/20 hover:text-white'
+                    }`}
                   >
-                    Discover Artists
-                  </Link>
-                )}
-                
-                {userProfile?.role === 'event_manager' && (
-                  <Link 
-                    to="/create-event" 
-                    className="flex items-center space-x-1 btn-primary"
-                  >
-                    <Plus className="h-4 w-4" />
-                    <span>Create Event</span>
+                    <div className="flex items-center gap-2">
+                      <Users className="h-4 w-4" />
+                      {location.pathname === '/artist-discovery' && (
+                        <span className="text-sm font-medium whitespace-nowrap">Artists</span>
+                      )}
+                    </div>
                   </Link>
                 )}
                 
                 <Link 
                   to="/messages" 
-                  className="text-dark-300 hover:text-white transition-colors duration-200"
+                  className={`relative flex items-center justify-center transition-all duration-300 ease-out touch-manipulation select-none cursor-pointer min-h-[40px] ${
+                    location.pathname === '/messages'
+                      ? 'bg-black text-white rounded-full px-4 py-2 min-w-[100px]'
+                      : 'bg-white/10 text-gray-300 rounded-full w-10 h-10 hover:bg-white/20 hover:text-white'
+                  }`}
                 >
-                  <MessageCircle className="h-5 w-5" />
+                  <div className="flex items-center gap-2">
+                    <MessageCircle className="h-4 w-4" />
+                    {location.pathname === '/messages' && (
+                      <span className="text-sm font-medium whitespace-nowrap">Messages</span>
+                    )}
+                  </div>
                 </Link>
                 
-                <div className="relative group">
-                  <button className="flex items-center space-x-2 text-dark-300 hover:text-white transition-colors duration-200">
-                    <User className="h-5 w-5" />
-                    <span>{userProfile?.name || 'Profile'}</span>
+                <div className="relative">
+                  <button
+                    onClick={toggleMenu}
+                    className={`relative flex items-center justify-center transition-all duration-300 ease-out touch-manipulation select-none cursor-pointer min-h-[40px] ${
+                      isMenuOpen
+                        ? 'bg-black text-white rounded-full px-4 py-2 min-w-[100px]'
+                        : 'bg-white/10 text-gray-300 rounded-full w-10 h-10 hover:bg-white/20 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <User className="h-4 w-4" />
+                      {isMenuOpen && (
+                        <span className="text-sm font-medium whitespace-nowrap">Profile</span>
+                      )}
+                    </div>
                   </button>
                   
-                  <div className="absolute right-0 mt-2 w-48 bg-dark-800 rounded-lg shadow-lg border border-dark-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                    <Link 
-                      to="/profile" 
-                      className="block px-4 py-2 text-sm text-dark-300 hover:text-white hover:bg-dark-700 rounded-t-lg"
-                    >
-                      View Profile
-                    </Link>
-                    <button 
-                      onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-sm text-dark-300 hover:text-white hover:bg-dark-700 rounded-b-lg flex items-center space-x-2"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      <span>Logout</span>
-                    </button>
-                  </div>
+                  {isMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-dark-700 rounded-md shadow-lg py-1 z-50">
+                      <Link 
+                        to="/profile" 
+                        className="block px-4 py-2 text-sm text-dark-300 hover:bg-dark-600 hover:text-white"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Profile
+                      </Link>
+                      <button 
+                        onClick={() => {
+                          handleLogout()
+                          setIsMenuOpen(false)
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm text-dark-300 hover:bg-dark-600 hover:text-white"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
                 </div>
-              </>
+              </div>
             ) : (
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center gap-1 bg-dark-700/50 backdrop-blur-sm rounded-full p-1">
                 <Link 
                   to="/login" 
-                  className="text-dark-300 hover:text-white transition-colors duration-200"
+                  className="bg-white/10 text-gray-300 rounded-full w-10 h-10 hover:bg-white/20 hover:text-white flex items-center justify-center transition-all duration-300"
                 >
-                  Login
+                  <User className="h-4 w-4" />
                 </Link>
                 <Link 
                   to="/register" 
-                  className="btn-primary"
+                  className="bg-black text-white rounded-full px-4 py-2 min-w-[100px] flex items-center justify-center transition-all duration-300 hover:bg-gray-800"
                 >
-                  Sign Up
+                  <span className="text-sm font-medium">Sign Up</span>
                 </Link>
               </div>
             )}
