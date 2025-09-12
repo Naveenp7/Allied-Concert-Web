@@ -1,0 +1,48 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users collection - users can read/write their own profile, read others
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Events collection - authenticated users can read, creators can write
+    match /events/{eventId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null;
+      allow update: if request.auth != null && request.auth.uid == resource.data.createdBy;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.createdBy;
+    }
+    
+    // Applications collection - musicians and event managers can access their applications
+    match /applications/{applicationId} {
+      allow read: if request.auth != null && 
+        (request.auth.uid == resource.data.musicianId || 
+         request.auth.uid == resource.data.eventManagerId);
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.musicianId;
+      allow update: if request.auth != null && 
+        (request.auth.uid == resource.data.musicianId || 
+         request.auth.uid == resource.data.eventManagerId);
+    }
+    
+    // Conversations collection - participants can read/write
+    match /conversations/{conversationId} {
+      allow read, write: if request.auth != null && 
+        request.auth.uid in resource.data.participants;
+      allow create: if request.auth != null;
+      
+      // Messages subcollection
+      match /messages/{messageId} {
+        allow read, write: if request.auth != null;
+        allow create: if request.auth != null;
+      }
+    }
+    
+    // Allow all authenticated users to read and write (for development)
+    // Remove this in production and use the specific rules above
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
