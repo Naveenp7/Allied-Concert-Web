@@ -83,11 +83,7 @@ const MobileNavbar = () => {
           icon: Search,
           label: 'Events'
         },
-        {
-          path: '/profile',
-          icon: Music,
-          label: 'Profile'
-        },
+        
         {
           path: '/messages',
           icon: MessageCircle,
