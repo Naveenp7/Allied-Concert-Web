@@ -8,6 +8,18 @@ export default defineConfig({
     open: true
   },
   build: {
-    outDir: 'dist'
+    outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore']
+        }
+      }
+    }
+  },
+  // PWA configuration
+  workbox: {
+    globPatterns: ['**/*.{js,css,html,png,svg,ico}']
   }
 })
