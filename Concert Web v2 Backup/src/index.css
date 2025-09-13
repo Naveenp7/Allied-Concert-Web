@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Mobile-first responsive utilities */
+@layer utilities {
+  .safe-area-pb {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+  
+  .mobile-container {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  .mobile-card {
+    @apply p-4 sm:p-6;
+  }
+  
+  .mobile-text {
+    @apply text-sm sm:text-base;
+  }
+  
+  .mobile-title {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+  
+  .mobile-button {
+    @apply px-4 py-3 text-sm font-medium min-h-[44px] touch-manipulation;
+  }
+  
+  .mobile-input {
+    @apply min-h-[44px] text-base;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-dark-600;
+  }
+  
+  body {
+    @apply bg-dark-900 text-white font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-dark-700 hover:bg-dark-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+  }
+  
+  .card {
+    @apply bg-dark-800 rounded-xl p-6 shadow-lg border border-dark-700;
+  }
+  
+  .input-field {
+    @apply bg-dark-700 border border-dark-600 rounded-lg px-3 py-2 text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+  }
+}
